@@ -1,10 +1,17 @@
 ---
-title: "Skills"
-output: 
+title: "Skills and Projects"
+output:
   html_document:
-    toc: true
-    toc_float: true
+    theme: lumen
 ---
+
+This page contains descriptions of quantitative, writing, and leadership skills I gained before pursuing my MPH.
+
+## Quantitative skills and projects
+
+While working as a Research Associate II at Centerstone’s Research Institute, I developed my skills in quantitative data analysis in SPSS. I worked on data analysis projects for two different grants that involved reporting descriptive statistics and performing Chi-square tests, independent samples t-tests, and paired samples t-tests. These tasks further involved preparing the dataset by assigning value labels, identifying missing values, and selecting the variable type.
+
+Some projects I have contributed data analysis to include a survey about LGBTQ+ youth’s most recent healthcare experiences and a comparison of demographics and indicators of quality of life among clients with opioid use disorder who have attempted suicide within the previous month versus participants who have not attempted suicide.
 
 ## Analytical writing skills
 
@@ -12,6 +19,6 @@ As an undergraduate student at New York University, I often wrote various forms 
 
 Furthermore, while working as an Assistant Research Scientist at the Institute of Human Development and Social Change, I co-wrote a memo to the New York City Department of Education to advise their trauma-informed approach to schooling during the COVID-19 pandemic based on recommendations from how schools handled education during and after previous crises.
 
-## Leadership Skills
+## Leadership skills
 
 I co-founded and served as President of Cruelty-Free Northeastern during my freshman and sophomore years of college, and I was elected Treasurer of the International Rescue Committee at New York University (NYU) during my senior year of college. Furthermore, I served as the Presentation Manager and Twitter Co-Manager during my internship at the SEED Program at NYU Langone Health.
