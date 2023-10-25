@@ -5,7 +5,7 @@ output:
     theme: lumen
 ---
 
-This page contains descriptions of quantitative, writing, and leadership skills I gained before pursuing my MPH.
+This page contains descriptions of quantitative, writing, and leadership skills I mostly gained before pursuing my MPH.
 
 ## Quantitative skills and projects
 
@@ -22,3 +22,9 @@ Furthermore, while working as an Assistant Research Scientist at the Institute o
 ## Leadership skills
 
 I co-founded and served as President of Cruelty-Free Northeastern during my freshman and sophomore years of college, and I was elected Treasurer of the International Rescue Committee at New York University (NYU) during my senior year of college. Furthermore, I served as the Presentation Manager and Twitter Co-Manager during my internship at the SEED Program at NYU Langone Health.
+
+## Visualization
+
+I am passionate about effective communication of research and evaluation findings and have attended trainings about best practices in data visualization from Ann Emery. A sample data visualization I created for a class project is below.
+
+<img src="images/visualization.jpg" style="width:50%">
