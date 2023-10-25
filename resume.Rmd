@@ -5,6 +5,8 @@ output:
     theme: lumen
 ---
 
-Please find my resume below.
+Before attending Mailman, I worked at Centerstone’s Research Institute (CRI) for almost two years as a Research Associate II in the Department of Program Evaluation on three behavioral, mental, and adolescent and sexual health grants in Tennessee. I enhanced my experience in survey development, interviewing, data management in Microsoft Excel, REDCap, and Qualtrics, protocol development, data cleaning, qualitative coding, quantitative data analysis in SPSS, data visualization in Canva, Tableau, and ArcGIS, and reporting and dissemination.
+
+Please find my full resume embedded below.
 
 <iframe src="resume.pdf" width="100%" height="500"></iframe>
