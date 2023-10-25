@@ -10,7 +10,7 @@ output:
 
 <img src="images/home.jpg" style="width:35%">
 
-My name is Sarah Younes, and I am currently a second-year Master of Public Health (MPH) candidate at Columbia University's Mailman School of Public Health. I am in the Sociomedical Sciences and I am pursuing a certificate in Public Health Research Methods.
+My name is Sarah Younes, and I am currently a second-year Master of Public Health (MPH) candidate at Columbia University's Mailman School of Public Health. I am in the Department of Sociomedical Sciences and I am pursuing a certificate in Public Health Research Methods.
 
 Thank you for visiting my website -- I am happy you are here!
 
