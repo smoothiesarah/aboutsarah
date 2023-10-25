@@ -1,0 +1,29 @@
+---
+title: "Homepage"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r}
+```
+
+## Welcome!
+
+<img src="images/home.jpg" style="width:50%">
+
+My name is Sarah Younes, and I am currently a second-year Master of Public Health (MPH) candidate at Columbia University's Mailman School of Public Health. I am in the Sociomedical Sciences and I am pursuing a certificate in Public Health Research Methods.
+
+Thank you for visiting my website -- I am happy you're here!
+
+## Career goals
+
+Upon receiving my MPH, I hope to continue working in research and evaluation in mental, behavioral, or sexual and reproductive health. I am interested in working at organizations whose goals are to translate their work into action, whether that is to directly develop effective interventions or programs or advise policy-making. The possibility of working to support this implementation stage is what drives me to work in research and evaluation for public health.
+
+## Pages in this website
+
+This website contains two pages, which can be accessed from the navigation menu or from the links below:
+
+* My [resume](resume.html)
+* Other [skills](skills.html)

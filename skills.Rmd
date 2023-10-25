@@ -1,0 +1,17 @@
+---
+title: "Skills"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Analytical writing skills
+
+As an undergraduate student at New York University, I often wrote various forms of analytical essays. My final paper for Black Life and Medicine was a primary source analysis of a section from “Our Bodies, Our Voices: The State of Black Women & Reproductive Justice” that examines impacts of policies on the health of black women. Additionally, my final paper for Source of a Nation: From Obama to Trump was a historical and comparative analysis about how Donald Trump’s values are not new but rather are extensions of the colonization and discrimination the country was founded on.
+
+Furthermore, while working as an Assistant Research Scientist at the Institute of Human Development and Social Change, I co-wrote a memo to the New York City Department of Education to advise their trauma-informed approach to schooling during the COVID-19 pandemic based on recommendations from how schools handled education during and after previous crises.
+
+## Leadership Skills
+
+I co-founded and served as President of Cruelty-Free Northeastern during my freshman and sophomore years of college, and I was elected Treasurer of the International Rescue Committee at New York University (NYU) during my senior year of college. Furthermore, I served as the Presentation Manager and Twitter Co-Manager during my internship at the SEED Program at NYU Langone Health.
