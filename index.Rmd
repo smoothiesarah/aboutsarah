@@ -24,3 +24,6 @@ This website contains two pages, which can be accessed from the navigation menu 
 
 * My [resume](resume.html)
 * Other [skills](skills.html)
+* [Dashboard](dashboard.html) I made for my Data Science I class
+
+Please see my email, LinkedIn, and GitHub profile in the icons in the navigation menu.

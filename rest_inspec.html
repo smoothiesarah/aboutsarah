@@ -11,7 +11,7 @@
 
 
 
-<title>Sarah M. Younes</title>
+<title>NYC Restaurant Inspections</title>
 
 <script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -328,6 +252,9 @@ div.tocify {
 </li>
 <li>
   <a href="skills.html">Skills</a>
+</li>
+<li>
+  <a href="dashboard.html">Dashboard</a>
 </li>
 <li>
   <a href="mailto:&lt;smy2122@cumc.columbia.edu&gt;">
@@ -356,49 +283,37 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Sarah M. Younes</h1>
+<h1 class="title toc-ignore">NYC Restaurant Inspections</h1>
 
 </div>
 
 
-<div id="welcome" class="section level2">
-<h2>Welcome!</h2>
-<p><img src="images/home.jpg" style="width:35%"></p>
-<p>My name is Sarah Younes, and I am currently a second-year Master of
-Public Health (MPH) candidate at Columbia University’s Mailman School of
-Public Health. I am in the Department of Sociomedical Sciences and I am
-pursuing a certificate in Public Health Research Methods.</p>
-<p>Thank you for visiting my website – I am happy you are here!</p>
-</div>
-<div id="career-goals" class="section level2">
-<h2>Career goals</h2>
-<p>Upon receiving my MPH, I hope to continue working in research and
-evaluation in mental, behavioral, or sexual and reproductive health. My
-belief in the power of empirical data to create change and my curiosity
-attract me to research and program evaluation positions, and I value the
-ability to translate findings into action, whether that is to directly
-develop effective interventions or programs or advise policy-making. The
-possibility of working to support this implementation stage further
-drives me to work in research and evaluation for public health.</p>
-</div>
-<div id="pages-in-this-website" class="section level2">
-<h2>Pages in this website</h2>
-<p>This website contains two pages, which can be accessed from the
-navigation menu or from the links below:</p>
-<ul>
-<li>My <a href="resume.html">resume</a></li>
-<li>Other <a href="skills.html">skills</a></li>
-<li><a href="dashboard.html">Dashboard</a> I made for my Data Science I
-class</li>
-</ul>
-<p>Please see my email, LinkedIn, and GitHub profile in the icons in the
-navigation menu.</p>
-</div>
+<pre class="r"><code>library(tidyverse)
+library(p8105.datasets)
+library(plotly)</code></pre>
+<p>I will load the dataset and conduct basic data cleaning to include
+only salad restaurants.</p>
+<pre class="r"><code>data(&quot;rest_inspec&quot;)
+
+rest_inspec =
+  rest_inspec |&gt;
+  select(-phone, -grade_date, -record_date) |&gt;
+  rename(
+    name = dba,
+    id = camis) |&gt;
+  mutate(
+    boro = str_to_title(boro),
+    name = str_to_title(name),
+    name = replace(name, name == &quot;Cava Grill&quot;, &quot;Cava&quot;),
+    name = replace(name, name == &quot;Cava Mezzo Grill&quot;, &quot;Cava&quot;)) |&gt;
+  drop_na() |&gt;
+  filter(
+    boro != &quot;Missing&quot;,
+    action != &quot;Missing&quot;,
+    name %in% c(&quot;Sweetgreen&quot;, &quot;Just Salad&quot;, &quot;Cava&quot;, &quot;Fresh &amp; Co&quot;))</code></pre>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -431,35 +346,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

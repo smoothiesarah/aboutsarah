@@ -1,0 +1,39 @@
+---
+title: "NYC Restaurant Inspections"
+output: html_document
+---
+
+```{r load packages, message=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+I will load the dataset and conduct basic data cleaning to include only salad restaurants.
+
+```{r load and clean data}
+data("rest_inspec")
+
+rest_inspec =
+  rest_inspec |>
+  select(-phone, -grade_date, -record_date) |>
+  rename(
+    name = dba,
+    id = camis) |>
+  mutate(
+    boro = str_to_title(boro),
+    name = str_to_title(name),
+    name = replace(name, name == "Cava Grill", "Cava"),
+    name = replace(name, name == "Cava Mezzo Grill", "Cava")) |>
+  drop_na() |>
+  filter(
+    boro != "Missing",
+    action != "Missing",
+    name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co"))
+```
+
+```{r EDA}
+
+```
+
+```{r}
