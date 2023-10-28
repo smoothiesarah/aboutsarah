@@ -3,20 +3,21 @@ title: "NYC Restaurant Inspections"
 output: html_document
 ---
 
-```{r load packages, message=FALSE}
+```{r load packages, message = FALSE}
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
 ```
 
-I will load the dataset and conduct basic data cleaning to include only salad restaurants.
+I will load the NYC Restaurant Inspections dataset and conduct basic data cleaning to include only my four favorite salad restaurants: Sweetgreen, Just Salad, Cava, and Fresh & Co.
 
 ```{r load and clean data}
 data("rest_inspec")
 
-rest_inspec =
+salad_inspec =
   rest_inspec |>
-  select(-phone, -grade_date, -record_date) |>
+  separate(
+    inspection_date, into = c("year", "month", "day"), sep = "-") |>
   rename(
     name = dba,
     id = camis) |>
@@ -24,16 +25,28 @@ rest_inspec =
     boro = str_to_title(boro),
     name = str_to_title(name),
     name = replace(name, name == "Cava Grill", "Cava"),
-    name = replace(name, name == "Cava Mezzo Grill", "Cava")) |>
-  drop_na() |>
+    name = replace(name, name == "Cava Mezze Grill", "Cava")) |>
   filter(
-    boro != "Missing",
-    action != "Missing",
-    name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co"))
+    name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co")) |>
+  drop_na() |>
+  select(
+    name, year, month, grade, critical_flag, action, score, boro, building, street, zipcode, id)
 ```
 
-```{r EDA}
+```{r salad bar, message = FALSE}
+salad_inspec |>
+  group_by(name, year) |>
+  summarize(mean_score = mean(score)) |>
+mutate(mean_score = round(mean_score, 2)) |>
+  plot_ly(x = ~year, y = ~mean_score, color = ~name, type = "bar", colors = "viridis")
+```
 
+```{r salad box, message = FALSE}
+salad_inspec |>
+  plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis")
 ```
 
 ```{r}
+salad_inspec |>
+  
+```

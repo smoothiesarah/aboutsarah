@@ -32,6 +32,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.3/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -291,13 +298,15 @@ $(document).ready(function () {
 <pre class="r"><code>library(tidyverse)
 library(p8105.datasets)
 library(plotly)</code></pre>
-<p>I will load the dataset and conduct basic data cleaning to include
-only salad restaurants.</p>
+<p>I will load the NYC Restaurant Inspections dataset and conduct basic
+data cleaning to include only my four favorite salad restaurants:
+Sweetgreen, Just Salad, Cava, and Fresh &amp; Co.</p>
 <pre class="r"><code>data(&quot;rest_inspec&quot;)
 
-rest_inspec =
+salad_inspec =
   rest_inspec |&gt;
-  select(-phone, -grade_date, -record_date) |&gt;
+  separate(
+    inspection_date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;), sep = &quot;-&quot;) |&gt;
   rename(
     name = dba,
     id = camis) |&gt;
@@ -305,12 +314,23 @@ rest_inspec =
     boro = str_to_title(boro),
     name = str_to_title(name),
     name = replace(name, name == &quot;Cava Grill&quot;, &quot;Cava&quot;),
-    name = replace(name, name == &quot;Cava Mezzo Grill&quot;, &quot;Cava&quot;)) |&gt;
-  drop_na() |&gt;
+    name = replace(name, name == &quot;Cava Mezze Grill&quot;, &quot;Cava&quot;)) |&gt;
   filter(
-    boro != &quot;Missing&quot;,
-    action != &quot;Missing&quot;,
-    name %in% c(&quot;Sweetgreen&quot;, &quot;Just Salad&quot;, &quot;Cava&quot;, &quot;Fresh &amp; Co&quot;))</code></pre>
+    name %in% c(&quot;Sweetgreen&quot;, &quot;Just Salad&quot;, &quot;Cava&quot;, &quot;Fresh &amp; Co&quot;)) |&gt;
+  drop_na() |&gt;
+  select(
+    name, year, month, grade, critical_flag, action, score, boro, building, street, zipcode, id)</code></pre>
+<pre class="r"><code>salad_inspec |&gt;
+  group_by(name, year) |&gt;
+  summarize(mean_score = mean(score)) |&gt;
+mutate(mean_score = round(mean_score, 2)) |&gt;
+  plot_ly(x = ~year, y = ~mean_score, color = ~name, type = &quot;bar&quot;, colors = &quot;viridis&quot;)</code></pre>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d309cff7b676bf21519d" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-d309cff7b676bf21519d">{"x":{"visdat":{"7971acfb051":["function () ","plotlyVisDat"]},"cur_data":"7971acfb051","attrs":{"7971acfb051":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"year","type":"category","categoryorder":"array","categoryarray":["2013","2014","2015","2016","2017"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"mean_score"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2016","2017"],"y":[3,11],"type":"bar","name":"Cava","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2013","2014","2015","2016","2017"],"y":[10,10.470000000000001,9.1400000000000006,7.6200000000000001,9.8200000000000003],"type":"bar","name":"Fresh & Co","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"textfont":{"color":"rgba(49,104,142,1)"},"error_y":{"color":"rgba(49,104,142,1)"},"error_x":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2014","2015","2016","2017"],"y":[10.960000000000001,9.4700000000000006,9.5199999999999996,9.4499999999999993],"type":"bar","name":"Just Salad","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"textfont":{"color":"rgba(53,183,121,1)"},"error_y":{"color":"rgba(53,183,121,1)"},"error_x":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2014","2015","2016","2017"],"y":[12,9.7899999999999991,9.7400000000000002,8.25],"type":"bar","name":"Sweetgreen","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>salad_inspec |&gt;
+  plot_ly(x = ~name, y = ~score, color = ~name, type = &quot;box&quot;, colors = &quot;viridis&quot;)</code></pre>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b05ab2cd520f4088f942" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b05ab2cd520f4088f942">{"x":{"visdat":{"797130996480":["function () ","plotlyVisDat"]},"cur_data":"797130996480","attrs":{"797130996480":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"name","type":"category","categoryorder":"array","categoryarray":["Cava","Fresh & Co","Just Salad","Sweetgreen"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"score"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"fillcolor":"rgba(68,1,84,0.5)","x":["Cava","Cava","Cava","Cava"],"y":[3,11,11,11],"type":"box","name":"Cava","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"line":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(49,104,142,0.5)","x":["Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co","Fresh & Co"],"y":[9,8,9,10,2,10,11,7,11,10,11,7,10,9,2,9,7,7,12,12,7,12,7,5,12,12,7,12,12,7,10,10,10,8,10,2,10,12,9,12,9,13,7,9,13,7,5,13,9,9,4,11,12,12,4,13,11,12,10,12,10,10,9,9,10,10,8,12,12,12,12,12,12,12,2,12,5,5],"type":"box","name":"Fresh & Co","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"line":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(53,183,121,0.5)","x":["Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad","Just Salad"],"y":[13,13,12,12,5,12,12,13,2,12,12,13,13,10,10,13,13,13,13,13,13,13,13,4,9,9,4,12,9,12,12,4,7,4,7,2,2,10,12,10,12,10,11,7,2,7,7,10,11,10,10,2,10,5,10,7,10,9,10,9,8,9,8,8,9,8,10,10,11,9,11,12,9,12,13,9,13,2,9,6,9,10,12,12,7,9,10,9,9,9,9,9,6,9,15,7,12,15,10,15,13,10,15,3,10,9,10,10,9,9,12,12,9,9,4,12,9,9,5,12,5,12,11,13,11,13,13,12,6,9,6,9,2,9,9,21,9,9,21,9,9,9,9,9,21],"type":"box","name":"Just Salad","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"line":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(253,231,37,0.5)","x":["Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen","Sweetgreen"],"y":[2,12,12,8,12,5,12,8,12,17,17,17,2,17,7,7,8,8,13,13,12,12,12,9,7,6,12,7,9,6,7,7,10,11,3,11,10,11,6,12,9,6,12,9,7,7,9,9,5,9,10,12,10,5,12,9],"type":"box","name":"Sweetgreen","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"line":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 
 
 
