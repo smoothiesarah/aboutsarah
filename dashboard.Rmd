@@ -1,0 +1,65 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+
+data("rest_inspec")
+
+salad_inspec =
+  rest_inspec |>
+  separate(
+    inspection_date, into = c("year", "month", "day"), sep = "-") |>
+  rename(
+    name = dba,
+    id = camis) |>
+  mutate(
+    boro = str_to_title(boro),
+    name = str_to_title(name),
+    name = replace(name, name == "Cava Grill", "Cava"),
+    name = replace(name, name == "Cava Mezze Grill", "Cava")) |>
+  filter(
+    name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co")) |>
+  drop_na() |>
+  select(
+    name, year, month, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Mean score per restaurant from 2013-2017
+
+```{r}
+salad_inspec |>
+  group_by(name, year) |>
+  summarize(mean_score = mean(score)) |>
+  mutate(mean_score = round(mean_score, 2)) |>
+  plot_ly(x = ~year, y = ~mean_score, color = ~name, type = "bar", colors = "viridis")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Distribution of scores per restaurant
+
+```{r}
+salad_inspec |>
+  plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis")
+```
+
+### Scores per month
+
+```{r}
+salad_inspec |>
+  plot_ly(x = ~month, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis")
+```
+

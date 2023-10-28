@@ -3,6 +3,8 @@ title: "NYC Restaurant Inspections"
 output: html_document
 ---
 
+As always, I will begin by loading the necessary packages.
+
 ```{r load packages, message = FALSE}
 library(tidyverse)
 library(p8105.datasets)
@@ -30,23 +32,29 @@ salad_inspec =
     name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co")) |>
   drop_na() |>
   select(
-    name, year, month, grade, critical_flag, action, score, boro, building, street, zipcode, id)
+    name, year, month, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
 ```
+
+My first graph will be a bar chart.
 
 ```{r salad bar, message = FALSE}
 salad_inspec |>
   group_by(name, year) |>
   summarize(mean_score = mean(score)) |>
-mutate(mean_score = round(mean_score, 2)) |>
+  mutate(mean_score = round(mean_score, 2)) |>
   plot_ly(x = ~year, y = ~mean_score, color = ~name, type = "bar", colors = "viridis")
 ```
+
+My second graph will be a box plot.
 
 ```{r salad box, message = FALSE}
 salad_inspec |>
   plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis")
 ```
 
-```{r}
+My third and final graph will be a scatterplot.
+
+```{r scatter}
 salad_inspec |>
-  
+  plot_ly(x = ~month, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis")
 ```
