@@ -9,12 +9,12 @@ navbar:
       href: skills.html
     - text: "Dashboard"
       href: dashboard.html
-    - icon: fa-envelope fa-lg
-      href: mailto:<smy2122@cumc.columbia.edu>
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/sarahmyounes/
     - icon: fa-github fa-lg
       href: http://github.com/smoothiesarah/
+    - icon: fa-envelope fa-lg
+      href: mailto:<smy2122@cumc.columbia.edu>
 output:
   html_document:
     theme: lumen
