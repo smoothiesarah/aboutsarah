@@ -7,6 +7,8 @@ output:
     theme: lumen
 ---
 
+Remember that low scores mean less violations! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B and those with 28 or more a C.
+
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
@@ -39,12 +41,20 @@ Column {data-width=650}
 
 ### Mean score per restaurant from 2013-2017
 
+This bar plot shows the average score for each restaurant per year from 2013-2017. Since the average score was always below a 13, the average score for each restaurant each year from 2013-2017 was an A. Although Cava performed the best in 2016, this score was an outlier, as only one Cava store was only inspected in 2016.
+
 ```{r}
 salad_inspec |>
   group_by(name, year) |>
-  summarize(mean_score = mean(score)) |>
+  summarize(
+    mean_score = mean(score),
+    n_inspections = n()) |>
   mutate(mean_score = round(mean_score, 2)) |>
-  plot_ly(x = ~year, y = ~mean_score, color = ~name, type = "bar", colors = "viridis")
+  mutate(text_label = str_c("Number of inspections that year: ", n_inspections)) |>
+  plot_ly(x = ~year, y = ~mean_score, color = ~name, type = "bar", text = ~text_label, colors = "viridis") |>
+  layout(
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Mean score"))
 ```
 
 Column {data-width=350}
@@ -52,15 +62,25 @@ Column {data-width=350}
 
 ### Distribution of scores per restaurant
 
+This box plot shows the distribution of scores (minimum, 25th percentile, median, 75th percentile, and maximum) for each restaurant from 2013-2017.
+
 ```{r}
 salad_inspec |>
-  plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis")
+  plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis") |>
+  layout(
+    xaxis = list(title = "Restaurant"),
+    yaxis = list(title = "Range of scores"))
 ```
 
-### Scores per month
+### Scores over time
+
+This scatter plot shows scores over time.
 
 ```{r}
 salad_inspec |>
-  plot_ly(x = ~inspection_date, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis")
+  plot_ly(x = ~inspection_date, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis") |>
+  layout(
+    xaxis = list(title = "Inspection date"),
+    yaxis = list(title = "Score"))
 ```
 
