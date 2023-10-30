@@ -3,6 +3,8 @@ title: "Skills and Projects"
 output:
   html_document:
     theme: lumen
+    toc: true
+    toc_float: true
 ---
 
 This page contains descriptions of quantitative, writing, and leadership skills I mostly gained before pursuing my MPH.
