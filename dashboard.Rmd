@@ -7,7 +7,7 @@ output:
     theme: lumen
 ---
 
-Remember that low scores mean less violations! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B and those with 28 or more a C.
+  Remember that low scores mean less violations! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B and those with 28 or more a C.
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
@@ -20,7 +20,7 @@ data("rest_inspec")
 salad_inspec =
   rest_inspec |>
   separate(
-    grade_date, into = c("year", "month", "day"), sep = "-") |>
+    inspection_date, into = c("year", "month", "day"), sep = "-") |>
   rename(
     name = dba,
     id = camis) |>
@@ -33,10 +33,10 @@ salad_inspec =
     name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co")) |>
   drop_na() |>
   select(
-    name, year, inspection_date, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
+    name, year, month, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
 ```
 
-Column {data-width=650}
+Column {data-width=600}
 -----------------------------------------------------------------------
 
 ### Mean score per restaurant from 2013-2017
@@ -57,12 +57,12 @@ salad_inspec |>
     yaxis = list(title = "Mean score"))
 ```
 
-Column {data-width=350}
+Column {data-width=400}
 -----------------------------------------------------------------------
 
 ### Distribution of scores per restaurant
 
-This box plot shows the distribution of scores (minimum, 25th percentile, median, 75th percentile, and maximum) for each restaurant from 2013-2017.
+This box plot shows the distribution of scores (minimum, 25th percentile, median, 75th percentile, and maximum) for each restaurant from 2013-2017. Cava followed by Fresh & Co had the most consistency in scores, all of which were As. Only Just Salad and Sweetgreen had locations that received Bs.
 
 ```{r}
 salad_inspec |>
@@ -72,13 +72,16 @@ salad_inspec |>
     yaxis = list(title = "Range of scores"))
 ```
 
-### Scores over time
+### Scores by month
 
-This scatter plot shows scores over time.
+This scatter plot shows the range of scores each month for each restaurant. June had the highest range of scores, as Just Salad simultaneously had two locations with the best score in the data set and three locations with the worst score in the data set.
 
 ```{r}
 salad_inspec |>
-  plot_ly(x = ~inspection_date, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis") |>
+  group_by(name, month, score) |>
+  summarize(n_inspections = n()) |>
+  mutate(text_label = str_c("Number of inspections with that score that month: ", n_inspections)) |>
+  plot_ly(x = ~month, y = ~score, color = ~name, type = "scatter", mode = "markers", text = ~text_label, colors = "viridis") |>
   layout(
     xaxis = list(title = "Inspection date"),
     yaxis = list(title = "Score"))
