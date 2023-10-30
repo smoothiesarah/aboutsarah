@@ -4,7 +4,7 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-      theme: lumen
+    theme: lumen
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +18,7 @@ data("rest_inspec")
 salad_inspec =
   rest_inspec |>
   separate(
-    inspection_date, into = c("year", "month", "day"), sep = "-") |>
+    grade_date, into = c("year", "month", "day"), sep = "-") |>
   rename(
     name = dba,
     id = camis) |>
@@ -31,7 +31,7 @@ salad_inspec =
     name %in% c("Sweetgreen", "Just Salad", "Cava", "Fresh & Co")) |>
   drop_na() |>
   select(
-    name, year, month, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
+    name, year, inspection_date, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
 ```
 
 Column {data-width=650}
@@ -61,6 +61,6 @@ salad_inspec |>
 
 ```{r}
 salad_inspec |>
-  plot_ly(x = ~month, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis")
+  plot_ly(x = ~inspection_date, y = ~score, color = ~name, type = "scatter", mode = "markers", colors = "viridis")
 ```
 
