@@ -49,7 +49,7 @@ salad_inspec =
     name, year, month, grade, cuisine_description, critical_flag, action, score, boro, zipcode)
 ```
 
-Column {data-width=600}
+Column {data-width=550}
 -----------------------------------------------------------------------
 
 ### Mean score per restaurant from 2013-2017
@@ -68,7 +68,7 @@ salad_inspec |>
     yaxis = list(title = "Mean score"))
 ```
 
-Column {data-width=400}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Distribution of scores per restaurant
