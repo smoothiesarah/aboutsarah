@@ -12,6 +12,15 @@ output:
 ---
 
    This dashboard is based off NYC Restaurant Inspection data from 2013-2017 for my four favorite salad chains: Cava, Fresh & Co, Just Salad, and Sweetgreen. Remember that low scores mean fewer violations and higher grades! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B, and those with 28 or more a C.
+   
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+The bar plot shows the average score for each restaurant per year from 2013-2017. Since the average score was always below a 13, the average score for each restaurant each year from 2013-2017 was an A. Although Cava performed the best in 2016, this score was an outlier, as only one Cava store was only inspected in 2016.
+
+The box plot shows the distribution of scores (minimum, 25th percentile, median, 75th percentile, and maximum) for each restaurant from 2013-2017. Cava followed by Fresh & Co had the most consistency in scores, all of which were As. Only Just Salad and Sweetgreen had locations that received Bs.
+
+The scatter plot shows the range of scores each month for each restaurant. June had the highest range of scores, as Just Salad simultaneously had two locations with the best score in the data set and three locations with the worst score in the data set.
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
@@ -45,8 +54,6 @@ Column {data-width=600}
 
 ### Mean score per restaurant from 2013-2017
 
-This bar plot shows the average score for each restaurant per year from 2013-2017. Since the average score was always below a 13, the average score for each restaurant each year from 2013-2017 was an A. Although Cava performed the best in 2016, this score was an outlier, as only one Cava store was only inspected in 2016.
-
 ```{r}
 salad_inspec |>
   group_by(name, year) |>
@@ -66,8 +73,6 @@ Column {data-width=400}
 
 ### Distribution of scores per restaurant
 
-This box plot shows the distribution of scores (minimum, 25th percentile, median, 75th percentile, and maximum) for each restaurant from 2013-2017. Cava followed by Fresh & Co had the most consistency in scores, all of which were As. Only Just Salad and Sweetgreen had locations that received Bs.
-
 ```{r}
 salad_inspec |>
   plot_ly(x = ~name, y = ~score, color = ~name, type = "box", colors = "viridis") |>
@@ -77,8 +82,6 @@ salad_inspec |>
 ```
 
 ### Scores by month
-
-This scatter plot shows the range of scores each month for each restaurant. June had the highest range of scores, as Just Salad simultaneously had two locations with the best score in the data set and three locations with the worst score in the data set.
 
 ```{r}
 salad_inspec |>
