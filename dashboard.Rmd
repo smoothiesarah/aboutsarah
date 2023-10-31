@@ -5,9 +5,13 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: lumen
+    navbar:
+      - { title: "Home", href: "index.html" }
+      - { title: "Resume", href: "resume.html" }
+      - { title: "Skills", href: "skills.html" }
 ---
 
-  Remember that low scores mean less violations! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B and those with 28 or more a C.
+   This dashboard is based off NYC Restaurant Inspection data from 2013-2017 for my four favorite salad chains: Cava, Fresh & Co, Just Salad, and Sweetgreen. Remember that low scores mean fewer violations and higher grades! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B, and those with 28 or more a C.
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
