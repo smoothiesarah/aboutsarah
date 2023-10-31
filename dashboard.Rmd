@@ -10,11 +10,11 @@ output:
       - { title: "Resume", href: "resume.html" }
       - { title: "Skills", href: "skills.html" }
 ---
-
-   This dashboard is based off NYC Restaurant Inspection data from 2013-2017 for my four favorite salad chains: Cava, Fresh & Co, Just Salad, and Sweetgreen. Remember that low scores mean fewer violations and higher grades! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B, and those with 28 or more a C.
    
 Column {.sidebar}
 -----------------------------------------------------------------------
+
+This dashboard is based off NYC Restaurant Inspection data from 2013-2017 for my four favorite salad chains: Cava, Fresh & Co, Just Salad, and Sweetgreen. Remember that low scores mean fewer violations and higher grades! Restaurants with a score between 0 and 13 points earn an A, those with 14 to 27 points receive a B, and those with 28 or more a C.
 
 The bar plot shows the average score for each restaurant per year from 2013-2017. Since the average score was always below a 13, the average score for each restaurant each year from 2013-2017 was an A. Although Cava performed the best in 2016, this score was an outlier, as only one Cava store was only inspected in 2016.
 
